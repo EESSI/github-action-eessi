@@ -5,7 +5,7 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: eessi/github-action-eessi@main
+    - uses: ocaisa/github-action-eessi@main
       with:
         eessi_config_package: 'https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi-0.3.0.pkg'
         run_local_checkout: 'true'
