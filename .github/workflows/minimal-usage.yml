@@ -5,20 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: cvmfs-contrib/github-action-cvmfs@main
+    - uses: eessi/github-action-eessi@main
       with:
         run_local_checkout: 'true'
-    - name: Test CernVM-FS
+    - name: Test EESSI
       run: |
-        echo "### Dump default.local ###"
-        cat /etc/cvmfs/default.local
-        echo "### Test /cvmfs/lhcb.cern.ch ###"
-        ls /cvmfs/lhcb.cern.ch
-        echo "### Test /cvmfs/auger.egi.eu ###"
-        ls /cvmfs/auger.egi.eu
-        echo "### Test /cvmfs/dune.opensciencegrid.org ###"
-        ls /cvmfs/dune.opensciencegrid.org
-        echo "### Test /cvmfs/sw.hsf.org ###"
-        ls /cvmfs/sw.hsf.org
-        echo "### Test /cvmfs/sft.cern.ch ###"
-        ls /cvmfs/sft.cern.ch
+        source /cvmfs/pilot.eessi-hpc.org/latest/init/bash
