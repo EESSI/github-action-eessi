@@ -15,7 +15,9 @@ jobs:
     steps:
     - uses: eessi/github-action-eessi@v1
     - name: Test EESSI
-      run: module avail
+      run: |
+        module avail
+      shell: bash
 ```
 
 We are working on getting the Action to also work with runners of type `macos-latest`. A minimal example of usage on `macos-latest` is:
@@ -26,7 +28,9 @@ jobs:
     steps:
     - uses: eessi/github-action-eessi@v1
     - name: Test EESSI
-      run: module avail
+      run: |
+        module avail
+      shell: bash
 ```
 
 ## Optional Parameters
@@ -47,6 +51,7 @@ jobs:
     - name: Test EESSI
       run: |
         module avail
+      shell: bash
 ```
 
 ## What Does This Action Do?
@@ -65,12 +70,13 @@ jobs:
       run: |
         module load GROMACS
         gmx --version
+      shell: bash
 ```
 
 ## Limitations
 
-This GitHub Action is only expected to work in workflows that [run on](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on) ubuntu and macOS targets (and even then likely only `ubuntu-latest`). This exludes the `windows` targets.
+This GitHub Action is only expected to work in workflows that [run on](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on) ubuntu and macOS targets (and even then likely only `ubuntu-latest`). This excludes the `windows` targets.
 
 ## Use With Docker
 
-In case your workflow uses docker containers, the cvmfs directory can be mounted inside the container by using the flag `-v /cvmfs:/cvmfs:shared`.
+In case your workflow uses docker containers, the cvmfs directory can be mounted inside the container by using the flag `-v /cvmfs:/cvmfs:shared`. You may also need to pass through the `BASH_ENV` variable using the flag `-e BASH_ENV`.
