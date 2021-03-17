@@ -3,15 +3,15 @@ on: [push, pull_request]
 jobs:
   macOS-minimal:
     runs-on: macos-latest
-    # Don't report this as a failure for PRs until we have a working version
-    continue-on-error: true
     steps:
     - uses: actions/checkout@v2
-    - uses: eessi/github-action-eessi@main
-      with:
-        eessi_config_package: 'https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi-0.3.0.pkg'
-        run_local_checkout: 'true'
+    #- uses: eessi/github-action-eessi@main
+    #  with:
+    #    eessi_config_package: 'https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi-0.3.0.pkg'
+    #    run_local_checkout: 'true'
     - name: Test EESSI
       run: |
-       module avail
+       echo "This is only a placeholder until we figure out how to enable macOS support"
+       echo "if we fix it, make sure to edit the README to include the macOS badge"
+       echo "which is currently commented out"
       shell: bash
