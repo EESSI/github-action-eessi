@@ -15,10 +15,10 @@ jobs:
     steps:
     - uses: eessi/github-action-eessi@v1
     - name: Test EESSI
-      run: source /cvmfs/pilot.eessi-hpc.org/latest/init/bash
+      run: module avail
 ```
 
-The Action also works with runners of type `macos-latest`. A minimal example of usage on `macos-latest` is:
+We are working on getting the Action to also work with runners of type `macos-latest`. A minimal example of usage on `macos-latest` is:
 ```yaml
 jobs:
   macOS-minimal:
@@ -26,7 +26,7 @@ jobs:
     steps:
     - uses: eessi/github-action-eessi@v1
     - name: Test EESSI
-      run: source /cvmfs/pilot.eessi-hpc.org/latest/init/bash
+      run: module avail
 ```
 
 ## Optional Parameters
@@ -43,15 +43,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: cvmfs-contrib/github-action-cvmfs@v2
+    - uses: ocaisa/github-action-eessi@v1
     - name: Test EESSI
       run: |
-        source /cvmfs/pilot.eessi-hpc.org/latest/init/bash
+        module avail
 ```
 
 ## What Does This Action Do?
 
-This GitHub Action installs the [EESSI](https://eessi.github.io/docs/) software stack.
+This GitHub Action installs the [EESSI](https://eessi.github.io/docs/) software stack, making it available to subsequent `bash` commands. This means one can create
+workflows such as:
+```yaml
+name: GROMACS usage
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: ocaisa/github-action-eessi@v1
+    - name: Test EESSI
+      run: |
+        module load GROMACS
+        gmx --version
+```
 
 ## Limitations
 
