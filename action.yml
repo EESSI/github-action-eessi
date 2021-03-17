@@ -12,6 +12,29 @@ inputs:
     description: 'Run the local checkout of the action and not the main repo code'
     required: false
     default: 'false'
+  # Need to retain non-empty parameters from github-action-cvmfs
+  cvmfs_client_profile:
+    description: 'Choose a suitable proxy automatically if set to single.'
+    required: false
+    default: 'single'
+  cvmfs_quota_limit:
+    description: 'Soft-limit of the cache in Megabyte. Consult https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners#supported-runners-and-hardware-resources before changing'
+    required: false
+    default: '15000'
+  cvmfs_use_cdn:
+    description: 'Change the stratum 1 endpoints to caching servers from Cloudflare.'
+    required: false
+    default: 'yes'
+  cvmfs_ubuntu_deb_location:
+    description: 'Location from where to download the Ubuntu deb package of CernVM-FS'
+    required: false
+    default: 'https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb'
+  cvmfs_macos_pkg_location:
+    description: 'Location from where to download the masOS pkg package of CernVM-FS'
+    required: false
+    default: 'http://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-latest.pkg'
+
+
 runs:
   using: "composite"
   steps:
@@ -32,3 +55,9 @@ runs:
         CVMFS_CONFIG_PACKAGE: ${{ inputs.eessi_config_package }}
         CVMFS_HTTP_PROXY: DIRECT
         CVMFS_REPOSITORIES: pilot.eessi-hpc.org
+        CVMFS_CLIENT_PROFILE: ${{ inputs.cvmfs_client_profile }}
+        CVMFS_QUOTA_LIMIT: ${{ inputs.cvmfs_quota_limit }}
+        CVMFS_USE_CDN: ${{ inputs.cvmfs_use_cdn }}
+        CVMFS_UBUNTU_DEB_LOCATION: ${{ inputs.cvmfs_ubuntu_deb_location }}
+        CVMFS_MACOS_PKG_LOCATION: ${{ inputs.cvmfs_macos_pkg_location }}
+
