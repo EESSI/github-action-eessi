@@ -48,6 +48,7 @@ runs:
           ln -s ${{ github.action_path }}/github-action-cvmfs/createConfig.sh ${{ github.action_path }}/createConfig.sh
           ${{ github.action_path }}/github-action-cvmfs/setup-cvmfs.sh
         fi
+        echo "EESSI_SILENT=1" >> $GITHUB_ENV
         echo "BASH_ENV=/cvmfs/pilot.eessi-hpc.org/latest/init/bash" >> $GITHUB_ENV
       shell: bash
       env:
