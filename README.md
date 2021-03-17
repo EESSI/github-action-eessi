@@ -1,5 +1,5 @@
 # GitHub Action: eessi/github-action-eessi
-[![ubuntu](https://github.com/ocaisa/github-action-eessi/workflows/ubuntu/badge.svg)](https://github.com/ocaisa/github-action-eessi/actions?query=workflow%3Aubuntu) [![macOS](https://github.com/ocaisa/github-action-eessi/workflows/macOS/badge.svg)](https://github.com/ocaisa/github-action-eessi/actions?query=workflow%3AmacOS)
+[![ubuntu](https://github.com/eessi/github-action-eessi/workflows/ubuntu/badge.svg)](https://github.com/eessi/github-action-eessi/actions?query=workflow%3Aubuntu) [![macOS](https://github.com/eessi/github-action-eessi/workflows/macOS/badge.svg)](https://github.com/eessi/github-action-eessi/actions?query=workflow%3AmacOS)
 
 
 This GitHub Action sets up EESSI for use in GitHub Workflows.
@@ -39,7 +39,7 @@ The following parameters are supported:
 
 ## Minimal Example
 
-The following minimal example, which is also a workflow in this repository at [.github/workflows/minimal-usage.yml](https://github.com/ocaisa/github-action-eessi/tree/main/.github/workflows/minimal-usage.yml), sets up EESSI and initiates the stack.
+The following minimal example, which is also a workflow in this repository at [.github/workflows/minimal-usage.yml](https://github.com/eessi/github-action-eessi/tree/main/.github/workflows/minimal-usage.yml), sets up EESSI and initiates the stack.
 ```yaml
 name: Minimal usage
 on: [push, pull_request]
@@ -47,7 +47,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: ocaisa/github-action-eessi@v1
+    - uses: eessi/github-action-eessi@v1
     - name: Test EESSI
       run: |
         module avail
@@ -65,7 +65,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: ocaisa/github-action-eessi@v1
+    - uses: eessi/github-action-eessi@v1
     - name: Test EESSI
       run: |
         module load GROMACS
