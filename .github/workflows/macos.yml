@@ -1,4 +1,4 @@
-name: macOS
+name: macOS-placeholder
 on: [push, pull_request]
 jobs:
   macOS-minimal:
