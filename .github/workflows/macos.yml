@@ -3,6 +3,8 @@ on: [push, pull_request]
 jobs:
   macOS-minimal:
     runs-on: macos-latest
+    # Don't report this as a failure for PRs until we have a working version
+    continue-on-error: true
     steps:
     - uses: actions/checkout@v2
     - uses: eessi/github-action-eessi@main
