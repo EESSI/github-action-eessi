@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: eessi/github-action-eessi@v1
+    - uses: eessi/github-action-eessi@main
       with:
         eessi_stack_version: '2020.12'
     - name: Test EESSI
