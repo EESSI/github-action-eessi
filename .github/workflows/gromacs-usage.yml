@@ -8,7 +8,7 @@ jobs:
     - uses: eessi/github-action-eessi@main
       with:
         run_local_checkout: 'true'
-        eessi_stack_Version: '2020.12'
+        eessi_stack_version: '2020.12'
     - name: Test EESSI
       run: |
         module load GROMACS
