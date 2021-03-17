@@ -4,6 +4,10 @@ branding:
   icon: 'server'
   color: 'gray-dark'
 inputs:
+  eessi_stack_version:
+    description: 'Version of the EESSI stack to configure'
+    required: false
+    default: 'latest'
   eessi_config_package:
     description: 'URL to the EESSI cvmfs config package to install'
     required: false
@@ -49,10 +53,11 @@ runs:
           ${{ github.action_path }}/github-action-cvmfs/setup-cvmfs.sh
         fi
         echo "EESSI_SILENT=1" >> $GITHUB_ENV
-        echo "BASH_ENV=/cvmfs/pilot.eessi-hpc.org/latest/init/bash" >> $GITHUB_ENV
+        echo "BASH_ENV=/cvmfs/pilot.eessi-hpc.org/$EESSI_STACK_VERSION/init/bash" >> $GITHUB_ENV
       shell: bash
       env:
         THIS: ${{ github.action_path }}
+        EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
         CVMFS_CONFIG_PACKAGE: ${{ inputs.eessi_config_package }}
         CVMFS_HTTP_PROXY: DIRECT
         CVMFS_REPOSITORIES: pilot.eessi-hpc.org
