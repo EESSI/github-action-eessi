@@ -10,4 +10,5 @@ jobs:
         run_local_checkout: 'true'
     - name: Test EESSI
       run: |
-        source /cvmfs/pilot.eessi-hpc.org/latest/init/bash
+        module avail
+      shell: bash
