@@ -2,7 +2,7 @@
 [![ubuntu](https://github.com/eessi/github-action-eessi/workflows/ubuntu/badge.svg)](https://github.com/eessi/github-action-eessi/actions?query=workflow%3Aubuntu) <!---[![macOS](https://github.com/eessi/github-action-eessi/workflows/macOS/badge.svg)](https://github.com/eessi/github-action-eessi/actions?query=workflow%3AmacOS)-->
 
 
-This GitHub Action sets up EESSI for use in GitHub Workflows.
+This GitHub Action sets up the [European Environment for Scientific Software Installations](https://eessi.github.io/docs/) (EESSI) for use in GitHub Workflows.
 
 ## Instructions
 You can use this GitHub Action in a workflow in your own repository with `uses: eessi/github-action-eessi@v1`.
