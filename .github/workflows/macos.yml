@@ -3,7 +3,6 @@ on: [push, pull_request]
 jobs:
   macOS-minimal:
     runs-on: macos-latest
-    continue-on-error: true
     steps:
     - uses: actions/checkout@v2
     - uses: ocaisa/github-action-eessi@main
