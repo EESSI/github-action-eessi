@@ -77,6 +77,11 @@ jobs:
 
 This GitHub Action is only expected to work in workflows that [run on](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on) ubuntu and macOS targets (and even then likely only `ubuntu-latest`). This excludes the `windows` targets.
 
+This GitHub Action relies on [cvmfs-contrib/github-action-cvmfs](https://github.com/cvmfs-contrib/github-action-cvmfs). GitHub Actions cannot inherit from another action however, so to get around this limitation we use a Git subtree. To update this repository with the latest version of the subtree you can use 
+```
+git subtree pull --prefix github-action-cvmfs https://github.com/cvmfs-contrib/github-action-cvmfs.git main --squash
+```
+
 ## Use With Docker
 
 In case your workflow uses docker containers, the cvmfs directory can be mounted inside the container by using the flag `-v /cvmfs:/cvmfs:shared`. You may also need to pass through the `BASH_ENV` variable using the flag `-e BASH_ENV`.
