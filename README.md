@@ -35,6 +35,8 @@ jobs:
 
 ## Optional Parameters
 The following parameters are supported:
+- `eessi_stack_version`: version of the EESSI stack to use (defaults to `latest`)
+- `eessi_config_package`: location of the EESSI CernVM-FS configuration package (defaults to `https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi_0.3.0_all.deb`). For macOS this parameter is required (e.g., `https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi-0.3.0.pkg`)
 - `run_local_checkout`: Run the local checkout of the action and not the main repo code. Only used for testing and development of this action (needed in CI).
 
 ## Minimal Example
