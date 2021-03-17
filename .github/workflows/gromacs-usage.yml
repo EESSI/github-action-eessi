@@ -1,4 +1,4 @@
-name: ubuntu
+name: ubuntu_gromacs
 on: [push, pull_request]
 jobs:
   build:
