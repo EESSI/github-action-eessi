@@ -13,3 +13,8 @@ jobs:
         module load GROMACS
         gmx --version
       shell: bash
+    - name: Test caching effect EESSI
+      run: |
+        module load GROMACS
+        gmx --version
+      shell: bash
