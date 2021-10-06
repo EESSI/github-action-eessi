@@ -11,7 +11,7 @@ inputs:
   eessi_config_package:
     description: 'URL to the EESSI cvmfs config package to install'
     required: false
-    default: 'https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi_0.3.0_all.deb'
+    default: 'https://github.com/EESSI/filesystem-layer/releases/download/v0.4.0/cvmfs-config-eessi_0.4.0_all.deb'
   run_local_checkout:
     description: 'Run the local checkout of the action and not the main repo code'
     required: false
