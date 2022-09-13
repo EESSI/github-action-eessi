@@ -53,7 +53,11 @@ runs:
           ${{ github.action_path }}/github-action-cvmfs/setup-cvmfs.sh
         fi
         echo "EESSI_SILENT=1" >> $GITHUB_ENV
-        echo "BASH_ENV=/cvmfs/pilot.eessi-hpc.org/$EESSI_STACK_VERSION/init/bash" >> $GITHUB_ENV
+        if [ "${{ inputs.eessi_stack_version }}" == "latest" ]; then
+          echo "BASH_ENV=/cvmfs/pilot.eessi-hpc.org/$EESSI_STACK_VERSION/init/bash" >> $GITHUB_ENV
+        else
+          echo "BASH_ENV=/cvmfs/pilot.eessi-hpc.org/versions/$EESSI_STACK_VERSION/init/bash" >> $GITHUB_ENV
+        fi
       shell: bash
       env:
         THIS: ${{ github.action_path }}
