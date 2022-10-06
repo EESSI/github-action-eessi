@@ -1,20 +1,31 @@
 name: ubuntu_gromacs
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: eessi/github-action-eessi@main
+    - uses: eessi/github-action-eessi@gromacs_envrc
       with:
         eessi_stack_version: '2021.06'
     - name: Test EESSI
       run: |
-        module load GROMACS
+        # GROMACS module is loaded via .envrc
         gmx --version
       shell: bash
     - name: Test caching effect EESSI
       run: |
-        module load GROMACS
         gmx --version
+      shell: bash
+    - name: Test module load
+      run: |
+        module load CMake
+        module list
+        cmake --version
       shell: bash
