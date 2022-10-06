@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: eessi/github-action-eessi@gromacs_envrc
+    - uses: eessi/github-action-eessi@main
       with:
         eessi_stack_version: '2021.06'
     - name: Test EESSI
