@@ -42,30 +42,18 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - id: lsb-release
-      run: |
-        source /etc/lsb-release
-        echo "::set-output name=id::${DISTRIB_ID}"
-        echo "::set-output name=release::${DISTRIB_RELEASE}"
-        echo "::set-output name=codename::${DISTRIB_CODENAME}"
-        echo "::set-output name=description::${DISTRIB_DESCRIPTION}"
-        echo "::set-output name=id-release::${DISTRIB_ID}-${DISTRIB_DESCRIPTION}"
-      shell: bash
-    - uses: actions/cache@v3
-      with:
-        key: cvmfs-apt-cache-${{ steps.lsb-release.outputs.id-release }}-${{ hashFiles('action.yml') }}
-        path: |
-          ${{ inputs.apt_cache }}
+    - uses: cvmfs-contrib/github-action-cvmfs@v3
+      env:
+        CVMFS_CONFIG_PACKAGE: ${{ inputs.eessi_config_package }}
+        CVMFS_HTTP_PROXY: DIRECT
+        CVMFS_REPOSITORIES: pilot.eessi-hpc.org
+        CVMFS_CLIENT_PROFILE: ${{ inputs.cvmfs_client_profile }}
+        CVMFS_QUOTA_LIMIT: ${{ inputs.cvmfs_quota_limit }}
+        CVMFS_USE_CDN: ${{ inputs.cvmfs_use_cdn }}
+        CVMFS_UBUNTU_DEB_LOCATION: ${{ inputs.cvmfs_ubuntu_deb_location }}
+        CVMFS_MACOS_PKG_LOCATION: ${{ inputs.cvmfs_macos_pkg_location }}
     - id: install-eessi
       run: |
-        if [ "${{ inputs.run_local_checkout }}" == "true" ]; then
-          echo "WARNING running local checkout of the action !"
-          ln -s github-action-cvmfs/createConfig.sh
-          .  github-action-cvmfs/setup-cvmfs.sh local
-        else
-          ln -s ${{ github.action_path }}/github-action-cvmfs/createConfig.sh ${{ github.action_path }}/createConfig.sh
-          ${{ github.action_path }}/github-action-cvmfs/setup-cvmfs.sh
-        fi
         echo "EESSI_SILENT=1" >> $GITHUB_ENV
         if [ "${{ inputs.eessi_stack_version }}" == "latest" ]; then
           echo "source /cvmfs/pilot.eessi-hpc.org/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
@@ -83,16 +71,5 @@ runs:
         echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
       shell: bash
       env:
-        ACTION_PATH: ${{ github.action_path }}
-        APT_CACHE: ${{ inputs.apt_cache }}
-        THIS: ${{ github.action_path }}
         EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
-        CVMFS_CONFIG_PACKAGE: ${{ inputs.eessi_config_package }}
-        CVMFS_HTTP_PROXY: DIRECT
-        CVMFS_REPOSITORIES: pilot.eessi-hpc.org
-        CVMFS_CLIENT_PROFILE: ${{ inputs.cvmfs_client_profile }}
-        CVMFS_QUOTA_LIMIT: ${{ inputs.cvmfs_quota_limit }}
-        CVMFS_USE_CDN: ${{ inputs.cvmfs_use_cdn }}
-        CVMFS_UBUNTU_DEB_LOCATION: ${{ inputs.cvmfs_ubuntu_deb_location }}
-        CVMFS_MACOS_PKG_LOCATION: ${{ inputs.cvmfs_macos_pkg_location }}
 
