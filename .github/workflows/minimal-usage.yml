@@ -10,5 +10,6 @@ jobs:
         run_local_checkout: 'true'
     - name: Test EESSI
       run: |
+        direnv status
         module avail
       shell: bash
