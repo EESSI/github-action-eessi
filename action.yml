@@ -12,11 +12,6 @@ inputs:
     description: 'URL to the EESSI cvmfs config package to install'
     required: false
     default: 'https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb'
-  run_local_checkout:
-    description: 'Run the local checkout of the action and not the main repo code'
-    required: false
-    default: 'false'
-  # Need to retain non-empty parameters from github-action-cvmfs
   cvmfs_client_profile:
     description: 'Choose a suitable proxy automatically if set to single.'
     required: false
@@ -29,29 +24,20 @@ inputs:
     description: 'Change the stratum 1 endpoints to caching servers from Cloudflare.'
     required: false
     default: 'yes'
-  cvmfs_ubuntu_deb_location:
-    description: 'Location from where to download the Ubuntu deb package of CernVM-FS'
-    required: false
-    default: 'https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb'
-  cvmfs_macos_pkg_location:
-    description: 'Location from where to download the masOS pkg package of CernVM-FS'
-    required: false
-    default: 'http://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-latest.pkg'
 
 
 runs:
   using: "composite"
   steps:
+    - uses: cvmfs-contrib/github-action-cvmfs@v3
+      with:
+        cvmfs_config_package: ${{ inputs.eessi_config_package }}
+        cvmfs_http_proxy: DIRECT
+        cvmfs_client_profile: ${{ inputs.cvmfs_client_profile }}
+        cvmfs_quota_limit: ${{ inputs.cvmfs_quota_limit }}
+        cvmfs_use_cdn: ${{ inputs.cvmfs_use_cdn }}
     - id: install-eessi
       run: |
-        if [ "${{ inputs.run_local_checkout }}" == "true" ]; then
-          echo "WARNING running local checkout of the action !"
-          ln -s github-action-cvmfs/createConfig.sh
-          .  github-action-cvmfs/setup-cvmfs.sh local
-        else
-          ln -s ${{ github.action_path }}/github-action-cvmfs/createConfig.sh ${{ github.action_path }}/createConfig.sh
-          ${{ github.action_path }}/github-action-cvmfs/setup-cvmfs.sh
-        fi
         echo "EESSI_SILENT=1" >> $GITHUB_ENV
         if [ "${{ inputs.eessi_stack_version }}" == "latest" ]; then
           echo "source /cvmfs/pilot.eessi-hpc.org/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
@@ -69,14 +55,4 @@ runs:
         echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
       shell: bash
       env:
-        THIS: ${{ github.action_path }}
         EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
-        CVMFS_CONFIG_PACKAGE: ${{ inputs.eessi_config_package }}
-        CVMFS_HTTP_PROXY: DIRECT
-        CVMFS_REPOSITORIES: pilot.eessi-hpc.org
-        CVMFS_CLIENT_PROFILE: ${{ inputs.cvmfs_client_profile }}
-        CVMFS_QUOTA_LIMIT: ${{ inputs.cvmfs_quota_limit }}
-        CVMFS_USE_CDN: ${{ inputs.cvmfs_use_cdn }}
-        CVMFS_UBUNTU_DEB_LOCATION: ${{ inputs.cvmfs_ubuntu_deb_location }}
-        CVMFS_MACOS_PKG_LOCATION: ${{ inputs.cvmfs_macos_pkg_location }}
-
