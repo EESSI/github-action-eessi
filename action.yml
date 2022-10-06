@@ -29,29 +29,19 @@ inputs:
     description: 'Change the stratum 1 endpoints to caching servers from Cloudflare.'
     required: false
     default: 'yes'
-  cvmfs_ubuntu_deb_location:
-    description: 'Location from where to download the Ubuntu deb package of CernVM-FS'
-    required: false
-    default: 'https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb'
-  cvmfs_macos_pkg_location:
-    description: 'Location from where to download the masOS pkg package of CernVM-FS'
-    required: false
-    default: 'http://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-latest.pkg'
 
 
 runs:
   using: "composite"
   steps:
     - uses: cvmfs-contrib/github-action-cvmfs@v3
-      env:
-        CVMFS_CONFIG_PACKAGE: ${{ inputs.eessi_config_package }}
-        CVMFS_HTTP_PROXY: DIRECT
-        CVMFS_REPOSITORIES: pilot.eessi-hpc.org
-        CVMFS_CLIENT_PROFILE: ${{ inputs.cvmfs_client_profile }}
-        CVMFS_QUOTA_LIMIT: ${{ inputs.cvmfs_quota_limit }}
-        CVMFS_USE_CDN: ${{ inputs.cvmfs_use_cdn }}
-        CVMFS_UBUNTU_DEB_LOCATION: ${{ inputs.cvmfs_ubuntu_deb_location }}
-        CVMFS_MACOS_PKG_LOCATION: ${{ inputs.cvmfs_macos_pkg_location }}
+      with:
+        cvmfs_config_package: ${{ inputs.eessi_config_package }}
+        cvmfs_http_proxy: DIRECT
+        cvmfs_respositories: pilot.eessi-hpc.org
+        cvmfs_client_profile: ${{ inputs.cvmfs_client_profile }}
+        cvmfs_quota_limit: ${{ inputs.cvmfs_quota_limit }}
+        cvmfs_use_cdn: ${{ inputs.cvmfs_use_cdn }}
     - id: install-eessi
       run: |
         echo "EESSI_SILENT=1" >> $GITHUB_ENV
@@ -72,12 +62,3 @@ runs:
       shell: bash
       env:
         EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
-        CVMFS_CONFIG_PACKAGE: ${{ inputs.eessi_config_package }}
-        CVMFS_HTTP_PROXY: DIRECT
-        CVMFS_REPOSITORIES: pilot.eessi-hpc.org
-        CVMFS_CLIENT_PROFILE: ${{ inputs.cvmfs_client_profile }}
-        CVMFS_QUOTA_LIMIT: ${{ inputs.cvmfs_quota_limit }}
-        CVMFS_USE_CDN: ${{ inputs.cvmfs_use_cdn }}
-        CVMFS_UBUNTU_DEB_LOCATION: ${{ inputs.cvmfs_ubuntu_deb_location }}
-        CVMFS_MACOS_PKG_LOCATION: ${{ inputs.cvmfs_macos_pkg_location }}
-
