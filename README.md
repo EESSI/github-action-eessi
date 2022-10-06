@@ -48,7 +48,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v1
+    - uses: eessi/github-action-eessi@v2
     - name: Test EESSI
       run: |
         module avail
@@ -66,7 +66,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v1
+    - uses: eessi/github-action-eessi@v2
     - name: Test EESSI
       run: |
         module load GROMACS
@@ -74,7 +74,7 @@ jobs:
       shell: bash
 ```
 
-The action also supports the use of [`direnv`](https://direnv.net/), which allows you to define a software environment inside a `.envrc` file in your repository. Coupled with EESSI, this can provide a complete build environment for your project. An example of a `.envrc` can be found in https://github.com/EESSI/github-action-eessi/blob/main/.envrc .
+The action also supports the use of [`direnv`](https://direnv.net/), which allows you to define a software environment inside a `.envrc` file in your repository. Coupled with EESSI, this can provide a complete build environment for your project. An example of a `.envrc` file can be found in https://github.com/EESSI/github-action-eessi/blob/main/.envrc .
 
 ## Limitations
 
