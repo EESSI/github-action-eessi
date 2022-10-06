@@ -54,10 +54,19 @@ runs:
         fi
         echo "EESSI_SILENT=1" >> $GITHUB_ENV
         if [ "${{ inputs.eessi_stack_version }}" == "latest" ]; then
-          echo "BASH_ENV=/cvmfs/pilot.eessi-hpc.org/$EESSI_STACK_VERSION/init/bash" >> $GITHUB_ENV
+          echo "source /cvmfs/pilot.eessi-hpc.org/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
         else
-          echo "BASH_ENV=/cvmfs/pilot.eessi-hpc.org/versions/$EESSI_STACK_VERSION/init/bash" >> $GITHUB_ENV
+          echo "source /cvmfs/pilot.eessi-hpc.org/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
         fi
+        sudo apt install -y direnv
+        echo 'unset BASH_ENV' >> $HOME/env_config.export
+        echo 'eval "$(direnv export bash)"' >> $HOME/env_config.export
+        mkdir -p $HOME/direnv/
+        echo "[whitelist]" >> $HOME/direnv/direnv.toml
+        echo "prefix = [ '$GITHUB_WORKSPACE' ]" >> $HOME/direnv/direnv.toml
+        cp $HOME/direnv/direnv.toml $HOME/direnv/config.toml
+        echo "BASH_ENV=$HOME/env_config.export" >> $GITHUB_ENV
+        echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
       shell: bash
       env:
         THIS: ${{ github.action_path }}
