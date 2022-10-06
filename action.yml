@@ -12,11 +12,6 @@ inputs:
     description: 'URL to the EESSI cvmfs config package to install'
     required: false
     default: 'https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb'
-  run_local_checkout:
-    description: 'Run the local checkout of the action and not the main repo code'
-    required: false
-    default: 'false'
-  # Need to retain non-empty parameters from github-action-cvmfs
   cvmfs_client_profile:
     description: 'Choose a suitable proxy automatically if set to single.'
     required: false
@@ -38,7 +33,6 @@ runs:
       with:
         cvmfs_config_package: ${{ inputs.eessi_config_package }}
         cvmfs_http_proxy: DIRECT
-        cvmfs_respositories: pilot.eessi-hpc.org
         cvmfs_client_profile: ${{ inputs.cvmfs_client_profile }}
         cvmfs_quota_limit: ${{ inputs.cvmfs_quota_limit }}
         cvmfs_use_cdn: ${{ inputs.cvmfs_use_cdn }}
