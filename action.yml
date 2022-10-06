@@ -72,4 +72,12 @@ runs:
       shell: bash
       env:
         EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
+        CVMFS_CONFIG_PACKAGE: ${{ inputs.eessi_config_package }}
+        CVMFS_HTTP_PROXY: DIRECT
+        CVMFS_REPOSITORIES: pilot.eessi-hpc.org
+        CVMFS_CLIENT_PROFILE: ${{ inputs.cvmfs_client_profile }}
+        CVMFS_QUOTA_LIMIT: ${{ inputs.cvmfs_quota_limit }}
+        CVMFS_USE_CDN: ${{ inputs.cvmfs_use_cdn }}
+        CVMFS_UBUNTU_DEB_LOCATION: ${{ inputs.cvmfs_ubuntu_deb_location }}
+        CVMFS_MACOS_PKG_LOCATION: ${{ inputs.cvmfs_macos_pkg_location }}
 
