@@ -5,9 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: eessi/github-action-eessi@update_cvmfs
-      with:
-        run_local_checkout: 'true'
+    - uses: ./
     - name: Test EESSI
       run: |
         direnv status
