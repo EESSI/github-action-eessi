@@ -5,7 +5,7 @@
 This GitHub Action sets up the [European Environment for Scientific Software Installations](https://eessi.github.io/docs/) (EESSI) for use in GitHub Workflows.
 
 ## Instructions
-You can use this GitHub Action in a workflow in your own repository with `uses: eessi/github-action-eessi@v1`.
+You can use this GitHub Action in a workflow in your own repository with `uses: eessi/github-action-eessi@v2`.
 
 A minimal job example for GitHub-hosted runners of type `ubuntu-latest`:
 ```yaml
@@ -13,7 +13,7 @@ jobs:
   ubuntu-minimal:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v1
+    - uses: eessi/github-action-eessi@v2
     - name: Test EESSI
       run: |
         module avail
@@ -26,7 +26,7 @@ jobs:
   macOS-minimal:
     runs-on: macos-latest
     steps:
-    - uses: eessi/github-action-eessi@v1
+    - uses: eessi/github-action-eessi@v2
     - name: Test EESSI
       run: |
         module avail
@@ -36,8 +36,7 @@ jobs:
 ## Optional Parameters
 The following parameters are supported:
 - `eessi_stack_version`: version of the EESSI stack to use (defaults to `latest`)
-- `eessi_config_package`: location of the EESSI CernVM-FS configuration package (defaults to `https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi_0.3.0_all.deb`). For macOS this parameter is required (e.g., `https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi-0.3.0.pkg`)
-- `run_local_checkout`: Run the local checkout of the action and not the main repo code. Only used for testing and development of this action (needed in CI).
+- `eessi_config_package`: location of the EESSI CernVM-FS configuration package (defaults to `https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb`). For macOS this parameter is required (e.g., `https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.pkg`)
 
 ## Minimal Example
 
@@ -75,14 +74,13 @@ jobs:
       shell: bash
 ```
 
+The action also supports the use of [`direnv`](https://direnv.net/), which allows you to define a software environment inside a `.envrc` file in your repository. Coupled with EESSI, this can provide a complete build environment for your project. An example of a `.envrc` can be found in https://github.com/EESSI/github-action-eessi/blob/main/.envrc .
+
 ## Limitations
 
-This GitHub Action is only expected to work in workflows that [run on](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on) ubuntu and macOS targets (and even then likely only `ubuntu-latest`). This excludes the `windows` targets.
+This GitHub Action is only expected to work in workflows that [run on](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on) ubuntu and macOS targets. This excludes the `windows` targets.
 
-This GitHub Action relies on [cvmfs-contrib/github-action-cvmfs](https://github.com/cvmfs-contrib/github-action-cvmfs). GitHub Actions cannot inherit from another action however, so to get around this limitation we use a Git subtree. To update this repository with the latest version of the subtree you can use 
-```
-git subtree pull --prefix github-action-cvmfs https://github.com/cvmfs-contrib/github-action-cvmfs.git main --squash
-```
+This GitHub Action leverages [cvmfs-contrib/github-action-cvmfs](https://github.com/cvmfs-contrib/github-action-cvmfs) to set up CernVMFS. 
 
 ## Use With Docker
 
