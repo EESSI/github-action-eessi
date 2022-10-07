@@ -87,6 +87,8 @@ where the `gmx` command was only available to run after the loading the necessar
 
 ## Limitations
 
+In order to trigger the initialisation of the EESSI environment and `direnv`, we leverage the environment variable `BASH_ENV`. As a result, this action is (currently) only supported with a `bash` shell.
+
 This GitHub Action is only expected to work in workflows that [run on](https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on) ubuntu. This currently excludes the `windows` and `macOS` targets.
 
 This GitHub Action leverages [cvmfs-contrib/github-action-cvmfs](https://github.com/cvmfs-contrib/github-action-cvmfs) to set up the [CernVM File System](https://cernvm.cern.ch/fs/) which acts as our distribution layer. The available software packages are limited by what we distribute, user input for extensions to this set can be provided by opening an issue at https://github.com/EESSI/software-layer.
