@@ -1,5 +1,4 @@
-# example 2: on merge to master
-name: Bump version
+name: Bump version tags
 on:
   pull_request:
     types:
