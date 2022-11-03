@@ -7,7 +7,7 @@ on:
       - main
 jobs:
   build:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
