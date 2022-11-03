@@ -1,0 +1,11 @@
+on:
+    # Sequence of patterns matched against refs/tags
+    tags:        
+      - v*.*.*
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: sersoft-gmbh/running-release-tags-action@v2
+      
