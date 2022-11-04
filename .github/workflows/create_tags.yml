@@ -11,8 +11,19 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: '0'
-      - uses: fischerscode/tagger@v0.1
+      - uses: robinraju/release-downloader@v1.3
         with:
-          # The prefix of the semantic tags.
-          # Default: ''
-          prefix: v
+          repository: "fischerscode/tagger"
+          fileName: "tagger.linux"
+          out-file-path: ${{ github.action_path }}
+          tag: v0.1.0
+      - run: |
+          chmod +x ${{ github.action_path }}/tagger.linux
+          ${{ github.action_path }}/tagger.linux move -s -p 'v' ${RELEASE_TAG##*/}
+          rm ${{ github.action_path }}/tagger.linux
+          repo="https://${GITHUB_ACTOR}:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push "$repo" --tags --force
+        shell: bash
+        env:
+          TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref }}
