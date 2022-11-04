@@ -15,12 +15,11 @@ jobs:
         with:
           repository: "fischerscode/tagger"
           fileName: "tagger.linux"
-          out-file-path: ${{ github.action_path }}
           tag: v0.1.0
       - run: |
-          chmod +x ${{ github.action_path }}/tagger.linux
-          ${{ github.action_path }}/tagger.linux move -s -p 'v' ${RELEASE_TAG##*/}
-          rm ${{ github.action_path }}/tagger.linux
+          chmod +x $GITHUB_WORKSPACE/tagger.linux
+          $GITHUB_WORKSPACE/tagger.linux move -s -p 'v' ${RELEASE_TAG##*/}
+          rm $GITHUB_WORKSPACE/tagger.linux
           repo="https://${GITHUB_ACTOR}:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push "$repo" --tags --force
         shell: bash
