@@ -22,6 +22,7 @@ jobs:
       - run: |
           # Make sure the tagger is what we expect
           echo "efe6d66750425757e599e586b995a19868e0f6b87428c872abce541df423f9d2 tagger.linux"|sha256sum --check --status
+      - run: |
           chmod +x $GITHUB_WORKSPACE/tagger.linux
           $GITHUB_WORKSPACE/tagger.linux move -s -p 'v' ${RELEASE_TAG##*/}
           rm $GITHUB_WORKSPACE/tagger.linux
