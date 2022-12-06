@@ -1,5 +1,7 @@
 name: macOS-placeholder
 on: [push, pull_request]
+# Declare default permissions as read only.
+permissions: read-all
 jobs:
   macOS-minimal:
     runs-on: macos-latest
