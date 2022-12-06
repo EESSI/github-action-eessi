@@ -29,7 +29,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: cvmfs-contrib/github-action-cvmfs@v3
+    - uses: cvmfs-contrib/github-action-cvmfs@d4641d0d591c9a5c3be23835ced2fb648b44c04b # v3.1
       with:
         cvmfs_config_package: ${{ inputs.eessi_config_package }}
         cvmfs_http_proxy: DIRECT
