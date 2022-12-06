@@ -1,10 +1,12 @@
 name: macOS-placeholder
 on: [push, pull_request]
+# Declare default permissions as read only.
+permissions: read-all
 jobs:
   macOS-minimal:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
     #- uses: eessi/github-action-eessi@main
     #  with:
     #    eessi_config_package: 'https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi-0.3.0.pkg'

@@ -3,15 +3,16 @@ on:
   release:
     types:
       - "created"
-
+# Declare default permissions as read only.
+permissions: read-all
 jobs:
   tags:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
         with:
           fetch-depth: '0'
-      - uses: robinraju/release-downloader@v1.3
+      - uses: robinraju/release-downloader@d6de084c58345d09b017e22701dbcf26977cfd14 # v1.6
         with:
           repository: "fischerscode/tagger"
           fileName: "tagger.linux"
@@ -23,6 +24,8 @@ jobs:
           repo="https://${GITHUB_ACTOR}:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git push "$repo" --tags --force
         shell: bash
+        permissions:
+          contents: write
         env:
           TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref }}
