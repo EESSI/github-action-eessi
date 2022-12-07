@@ -1,5 +1,11 @@
 name: macOS-placeholder
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 # Declare default permissions as read only.
 permissions: read-all
 jobs:
