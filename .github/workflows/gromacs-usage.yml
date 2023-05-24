@@ -18,7 +18,7 @@ jobs:
         eessi_stack_version: '2021.06'
     - name: Test EESSI
       run: |
-        cmvfs_config showconfig pilot.eessi-hpc.org
+        BASH_ENV= sudo cmvfs_config showconfig pilot.eessi-hpc.org
         # GROMACS module is loaded via .envrc
         gmx --version
       shell: bash
