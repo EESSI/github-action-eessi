@@ -23,7 +23,7 @@ inputs:
   cvmfs_use_cdn:
     description: 'Change the stratum 1 endpoints to caching servers from Cloudflare.'
     required: false
-    default: 'yes'
+    default: 'no'
 
 
 runs:
