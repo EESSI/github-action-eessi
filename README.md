@@ -76,7 +76,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v2
+    - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
         module load TensorFlow
