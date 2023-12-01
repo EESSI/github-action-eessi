@@ -1,4 +1,4 @@
-name: ubuntu
+name: ubuntu-minimal_usage
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ on:
 # Declare default permissions as read only.
 permissions: read-all
 jobs:
-  build:
+  minimal_usage:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
