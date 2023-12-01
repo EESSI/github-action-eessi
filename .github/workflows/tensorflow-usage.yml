@@ -16,11 +16,11 @@ jobs:
     - name: Test EESSI
       run: |
         # TensorFlow module is loaded via .envrc
-        python -m tensorflow -c "print(tensorflow.VERSION)"
+        python -c "import tensorflow; print(tensorflow.__version__)"
       shell: bash
     - name: Test caching effect of EESSI
       run: |
-        python -m tensorflow -c "print(tensorflow.VERSION)"
+        python -c "import tensorflow; print(tensorflow.__version__)"
       shell: bash
     - name: Test module load
       run: |

@@ -80,7 +80,7 @@ jobs:
     - name: Test EESSI
       run: |
         module load TensorFlow
-        python -m tensorflow -c "print(tensorflow.VERSION)"
+        python -c "import tensorflow; print(tensorflow.__version__)"
       shell: bash
 ```
 where the `tensorflow` python module was only available to run after the loading the necessary environment module `TensorFlow`. Note that I have not given the version of `TensorFlow` which means the latest available version will be loaded.
