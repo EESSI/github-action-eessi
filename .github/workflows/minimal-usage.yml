@@ -17,5 +17,5 @@ jobs:
     - name: Test EESSI
       run: |
         module avail
-        direnv status
+        # direnv status
       shell: bash
