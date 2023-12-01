@@ -13,7 +13,7 @@ module load CMake/3.20.1-GCCcore-10.3.0  # Load a dependency of my project (CMak
 Another example of a `.envrc` file can be found in the [.envrc](https://github.com/EESSI/github-action-eessi/blob/main/.envrc) included with this repository.
 
 ## Instructions
-You can use this GitHub Action in a workflow in your own repository with `uses: eessi/github-action-eessi@v2`.
+You can use this GitHub Action in a workflow in your own repository with `uses: eessi/github-action-eessi@v3`.
 
 A minimal job example for GitHub-hosted runners of type `ubuntu-latest`:
 ```yaml
@@ -21,7 +21,7 @@ jobs:
   ubuntu-minimal:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v2
+    - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
         module avail
@@ -44,7 +44,7 @@ jobs:
 
 ## Optional Parameters
 The following parameters are supported:
-- `eessi_stack_version`: version of the EESSI stack to use (defaults to `latest`)
+- `eessi_stack_version`: version of the EESSI stack to use (defaults to `2023.06`)
 - `eessi_config_package`: location of the EESSI CernVM-FS configuration package (defaults to `https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb`). 
 <!--For macOS this parameter is required (e.g., `https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.pkg`) -->
 
@@ -58,7 +58,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v2
+    - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
         module avail
@@ -70,7 +70,7 @@ jobs:
 This GitHub Action installs the [EESSI](https://eessi.github.io/docs/) software stack, making it available to subsequent `bash` commands. This means one can create
 workflows such as:
 ```yaml
-name: GROMACS usage
+name: TensorFlow usage
 on: [push, pull_request]
 jobs:
   build:
@@ -79,11 +79,11 @@ jobs:
     - uses: eessi/github-action-eessi@v2
     - name: Test EESSI
       run: |
-        module load GROMACS
-        gmx --version
+        module load TensorFlow
+        python -m tensorflow -c "print(tensorflow.VERSION)"
       shell: bash
 ```
-where the `gmx` command was only available to run after the loading the necessary environment module `GROMACS`. Note that I have not given the version of `GROMACS` which means the latest available version will be loaded.
+where the `tensorflow` python module was only available to run after the loading the necessary environment module `TensorFlow`. Note that I have not given the version of `TensorFlow` which means the latest available version will be loaded.
 
 ## Limitations
 

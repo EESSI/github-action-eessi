@@ -1,4 +1,4 @@
-name: ubuntu_gromacs
+name: ubuntu_tensorflow
 on:
   push:
     branches:
@@ -15,15 +15,15 @@ jobs:
     - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
     - uses: eessi/github-action-eessi@main
       with:
-        eessi_stack_version: '2021.06'
+        eessi_stack_version: '2023.06'
     - name: Test EESSI
       run: |
-        # GROMACS module is loaded via .envrc
-        gmx --version
+        # TensorFlow module is loaded via .envrc
+        python -m tensorflow -c "print(tensorflow.VERSION)"
       shell: bash
-    - name: Test caching effect EESSI
+    - name: Test caching effect of EESSI
       run: |
-        gmx --version
+        python -m tensorflow -c "print(tensorflow.VERSION)"
       shell: bash
     - name: Test module load
       run: |

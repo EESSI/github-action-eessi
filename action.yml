@@ -7,7 +7,7 @@ inputs:
   eessi_stack_version:
     description: 'Version of the EESSI stack to configure'
     required: false
-    default: 'latest'
+    default: '2023.06'
   eessi_config_package:
     description: 'URL to the EESSI cvmfs config package to install'
     required: false
@@ -39,11 +39,7 @@ runs:
     - id: install-eessi
       run: |
         echo "EESSI_SILENT=1" >> $GITHUB_ENV
-        if [ "${{ inputs.eessi_stack_version }}" == "latest" ]; then
-          echo "source /cvmfs/pilot.eessi-hpc.org/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
-        else
-          echo "source /cvmfs/pilot.eessi-hpc.org/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
-        fi
+        echo "source /cvmfs/sotware.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
         sudo apt install -y direnv
         echo 'unset BASH_ENV' >> $HOME/env_config.export
         echo 'eval "$(direnv export bash)"' >> $HOME/env_config.export
