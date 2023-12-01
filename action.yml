@@ -8,29 +8,14 @@ inputs:
     description: 'Version of the EESSI stack to configure'
     required: false
     default: '2023.06'
-  cvmfs_client_profile:
-    description: 'Choose a suitable proxy automatically if set to single.'
-    required: false
-    default: 'single'
-  cvmfs_quota_limit:
-    description: 'Soft-limit of the cache in Megabyte. Consult https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners#supported-runners-and-hardware-resources before changing'
-    required: false
-    default: '10000'
-  cvmfs_use_cdn:
-    description: 'Change the stratum 1 endpoints to caching servers from Cloudflare.'
-    required: false
-    default: 'no'
-
 
 runs:
   using: "composite"
   steps:
     - uses: cvmfs-contrib/github-action-cvmfs@d4641d0d591c9a5c3be23835ced2fb648b44c04b # v3.1
       with:
+        cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
         cvmfs_http_proxy: DIRECT
-        cvmfs_client_profile: ${{ inputs.cvmfs_client_profile }}
-        cvmfs_quota_limit: ${{ inputs.cvmfs_quota_limit }}
-        cvmfs_use_cdn: ${{ inputs.cvmfs_use_cdn }}
         cvmfs_repositories: software.eessi.io
     - id: install-eessi
       run: |
