@@ -16,7 +16,7 @@ runs:
       with:
         cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
         cvmfs_http_proxy: DIRECT
-        cvmfs_repositories: software.eessi.io
+        cvmfs_repositories: software.eessi.io,dev.eessi.io
     - id: install-eessi
       run: |
         echo "EESSI_SILENT=1" >> $GITHUB_ENV
