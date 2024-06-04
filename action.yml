@@ -36,7 +36,10 @@ runs:
           echo "BASH_ENV=$HOME/env_config.export" >> $GITHUB_ENV
           echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
         elif [ "$RUNNER_OS" == "macOS" ]; then
-          brew install qemu lima
+          brew remove --ignore-dependencies qemu
+          curl -o ./qemu.rb https://raw.githubusercontent.com/Homebrew/homebrew-core/dc0669eca9479e9eeb495397ba3a7480aaa45c2e/Formula/qemu.rb
+          brew install ./qemu.rb
+          brew install lima
           limactl create --name eessi ./eessi.yaml
           limactl start
         fi
