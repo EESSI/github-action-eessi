@@ -38,6 +38,7 @@ runs:
         elif [ "$RUNNER_OS" == "macOS" ]; then
           brew install lima
           limactl create --name eessi ./eessi.yaml
+          limactl start eessi
         fi
       shell: bash
       env:
