@@ -12,7 +12,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: cvmfs-contrib/github-action-cvmfs@55899ca74cf78ab874bdf47f5a804e47c198743c # v4.0
+    - uses: cvmfs-contrib/github-action-cvmfs@cec5c94a14714ab02980682fce8ab3de238401f9 # v4.0 + MacOS support
       with:
         # cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
         cvmfs_http_proxy: DIRECT

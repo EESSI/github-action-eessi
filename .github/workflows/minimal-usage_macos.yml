@@ -9,7 +9,7 @@ on:
 # Declare default permissions as read only.
 permissions: read-all
 jobs:
-  minimal_usage:
+  macos_minimal_usage:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
