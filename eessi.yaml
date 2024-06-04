@@ -2,15 +2,6 @@
 # $ limactl start ./eessi.yaml
 # $ limactl shell eessi
 
-#images:
-# Try to use release-yyyyMMdd image if available. Note that release-yyyyMMdd will be removed after several months.
-#- location: "https://cloud.debian.org/images/cloud/bookworm/20240429-1732/debian-12-genericcloud-arm64-20240429-1732.qcow2"
-#  arch: "aarch64"
-#  digest: "sha512:59afc40ad0062ca100c9280a281256487348c8aa23b3e70c329a6d6f29b5343b628622e63e0b9b4fc3987dd691d5f3c657233186b3271878d5e0aa0b4d264b06"
-# Fallback to the latest release image.
-# Hint: run `limactl prune` to invalidate the cache
-#- location: "https://cloud.debian.org/images/cloud/bookworm/latest/debian-12-genericcloud-arm64.qcow2"
-#  arch: "aarch64"
 images:
 # Try to use release-yyyyMMdd image if available. Note that release-yyyyMMdd will be removed after several months.
 - location: "https://cloud-images.ubuntu.com/releases/22.04/release-20240514/ubuntu-22.04-server-cloudimg-amd64.img"
@@ -28,8 +19,6 @@ images:
 
 mounts:
 - location: "~"
-  writable: true
-- location: "/cvmfs"
 - location: "/tmp/lima"
   writable: true
 containerd:
@@ -39,7 +28,16 @@ provision:
 - mode: system
   script: |
     #!/bin/bash
-    sudo apt install direnv
+    wget -P /tmp https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb
+    sudo dpkg -i /tmp/cvmfs-release-latest_all.deb
+    rm -f /tmp/cvmfs-release-latest_all.deb
+    sudo apt-get update
+    sudo apt-get install -y cvmfs
+    if [ ! -f /etc/cvmfs/default.local ]; then
+        sudo echo "CVMFS_HTTP_PROXY=DIRECT" >> /etc/cvmfs/default.local
+        sudo echo "CVMFS_QUOTA_LIMIT=10000" >> /etc/cvmfs/default.local
+    fi
+    sudo cvmfs_config setup
 probes:
 - script: |
     #!/bin/bash
