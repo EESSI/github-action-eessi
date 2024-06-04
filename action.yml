@@ -11,7 +11,7 @@ inputs:
   eessi_repositories:
     description: 'Comma-separated list of fully qualified repository names that shall be mountable under /cvmfs.'
     required: false
-    default: 'software.eessi.io,dev.eessi.io'
+    default: 'cvmfs-config.cern.ch,software.eessi.io,dev.eessi.io'
 
 runs:
   using: "composite"
