@@ -1,0 +1,26 @@
+name: macos-minimal_usage
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+# Declare default permissions as read only.
+permissions: read-all
+jobs:
+  minimal_usage:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+    - uses: ./
+    # - name: Test EESSI
+    #  run: |
+    #    direnv status
+    #    module avail
+    #  shell: bash
+    - name: Test available repos
+      run: |
+        ls /cvmfs/software.eessi.io
+        ls /cvmfs/dev.eessi.io
+      shell: bash

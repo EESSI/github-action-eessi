@@ -14,22 +14,26 @@ runs:
   steps:
     - uses: cvmfs-contrib/github-action-cvmfs@55899ca74cf78ab874bdf47f5a804e47c198743c # v4.0
       with:
-        cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
+        # cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
         cvmfs_http_proxy: DIRECT
         cvmfs_repositories: software.eessi.io,dev.eessi.io
     - id: install-eessi
       run: |
-        echo "EESSI_SILENT=1" >> $GITHUB_ENV
-        echo 'unset BASH_ENV' >> $HOME/env_config.export
-        echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
-        sudo apt install -y direnv
-        echo 'eval "$(direnv export bash)"' >> $HOME/env_config.export
-        mkdir -p $HOME/direnv/
-        echo "[whitelist]" >> $HOME/direnv/direnv.toml
-        echo "prefix = [ '$GITHUB_WORKSPACE' ]" >> $HOME/direnv/direnv.toml
-        cp $HOME/direnv/direnv.toml $HOME/direnv/config.toml
-        echo "BASH_ENV=$HOME/env_config.export" >> $GITHUB_ENV
-        echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
+        if [ "$RUNNER_OS" == "Linux" ]; then
+          echo "EESSI_SILENT=1" >> $GITHUB_ENV
+          echo 'unset BASH_ENV' >> $HOME/env_config.export
+          echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
+          sudo apt install -y direnv
+          echo 'eval "$(direnv export bash)"' >> $HOME/env_config.export
+          mkdir -p $HOME/direnv/
+          echo "[whitelist]" >> $HOME/direnv/direnv.toml
+          echo "prefix = [ '$GITHUB_WORKSPACE' ]" >> $HOME/direnv/direnv.toml
+          cp $HOME/direnv/direnv.toml $HOME/direnv/config.toml
+          echo "BASH_ENV=$HOME/env_config.export" >> $GITHUB_ENV
+          echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
+        elif [ "$RUNNER_OS" == "macOS" ]; then
+          echo "id-release=macOS-$(sw_vers -productVersion)" >> $GITHUB_OUTPUT
+        fi
       shell: bash
       env:
         EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
