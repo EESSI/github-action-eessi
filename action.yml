@@ -36,7 +36,7 @@ runs:
           echo "BASH_ENV=$HOME/env_config.export" >> $GITHUB_ENV
           echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
         elif [ "$RUNNER_OS" == "macOS" ]; then
-          brew install lima
+          brew install qemu lima
           limactl create --name eessi ./eessi.yaml
           limactl start eessi
         fi
