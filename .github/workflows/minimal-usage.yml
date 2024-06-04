@@ -19,3 +19,8 @@ jobs:
         direnv status
         module avail
       shell: bash
+    - name: Test available repos
+      run: |
+        ls /cvmfs/software.eessi.io
+        ls /cvmfs/dev.eessi.io
+      shell: bash
