@@ -36,7 +36,7 @@ runs:
           echo "BASH_ENV=$HOME/env_config.export" >> $GITHUB_ENV
           echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
         elif [ "$RUNNER_OS" == "macOS" ]; then
-          echo "id-release=macOS-$(sw_vers -productVersion)" >> $GITHUB_OUTPUT
+          brew install lima
         fi
       shell: bash
       env:
