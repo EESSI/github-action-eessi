@@ -37,7 +37,7 @@ runs:
           echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
         elif [ "$RUNNER_OS" == "macOS" ]; then
           brew install lima
-          limactl create --vm-type=vz --mount-type=virtiofs --name eessi ./eessi.yaml
+          limactl create --vm-type=vz --mount-type=virtiofs --network vzNAT --name eessi ./eessi.yaml
           limactl start eessi
         fi
       shell: bash
