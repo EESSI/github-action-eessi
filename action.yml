@@ -38,7 +38,7 @@ runs:
         elif [ "$RUNNER_OS" == "macOS" ]; then
           brew install qemu lima
           limactl create --name eessi ./eessi.yaml
-          limactl start eessi
+          limactl start
         fi
       shell: bash
       env:
