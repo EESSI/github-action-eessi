@@ -8,6 +8,10 @@ inputs:
     description: 'Version of the EESSI stack to configure'
     required: false
     default: '2023.06'
+  eessi_repositories:
+    description: 'Comma-separated list of fully qualified repository names that shall be mountable under /cvmfs.'
+    required: false
+    default: 'software.eessi.io,dev.eessi.io'
 
 runs:
   using: "composite"
@@ -16,7 +20,7 @@ runs:
       with:
         # cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
         cvmfs_http_proxy: DIRECT
-        cvmfs_repositories: software.eessi.io,dev.eessi.io
+        cvmfs_repositories: ${{ inputs.eessi_repositories }}
     - id: install-eessi
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
