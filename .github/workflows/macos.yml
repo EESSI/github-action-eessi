@@ -1,4 +1,4 @@
-name: macos-minimal_usage
+name: macOS-minimal
 on:
   push:
     branches:
