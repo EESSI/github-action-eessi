@@ -18,6 +18,7 @@ runs:
   steps:
     - uses: cvmfs-contrib/github-action-cvmfs@cec5c94a14714ab02980682fce8ab3de238401f9 # v4.0 + MacOS support
       with:
+        # Can't use config package for macOS but our repos are available with the default configuration anyway
         # cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
         cvmfs_http_proxy: DIRECT
         cvmfs_repositories: 'cvmfs-config.cern.ch,${{ inputs.eessi_repositories }}'
@@ -36,11 +37,15 @@ runs:
           echo "BASH_ENV=$HOME/env_config.export" >> $GITHUB_ENV
           echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
         elif [ "$RUNNER_OS" == "macOS" ]; then
+          # EESSI on macOS requires lima so we get a Linux VM, see https://gitlab.com/eessi/support/-/issues/70
+          # (unfortunately this requires nested virtualisation in GitHub Actions which is not available with M1)
           brew install lima
           # limactl create --vm-type=vz --mount-type=virtiofs --network vzNAT --name eessi ./eessi.yaml
-          limactl create --name eessi ./eessi.yaml
-          limactl start eessi || true
-          cat /Users/runner/.lima/eessi/ha.stderr.log
+          # limactl create --name eessi ./eessi.yaml
+          # limactl start eessi
+          ## For debugging
+          # limactl start eessi || true
+          # cat /Users/runner/.lima/eessi/ha.stderr.log
         fi
       shell: bash
       env:
