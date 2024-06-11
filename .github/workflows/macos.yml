@@ -1,4 +1,4 @@
-name: macOS-placeholder
+name: macos-minimal_usage
 on:
   push:
     branches:
@@ -9,17 +9,18 @@ on:
 # Declare default permissions as read only.
 permissions: read-all
 jobs:
-  macOS-minimal:
-    runs-on: macos-latest
+  macos_minimal_usage:
+    runs-on: macos-14
     steps:
     - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
-    #- uses: eessi/github-action-eessi@main
-    #  with:
-    #    eessi_config_package: 'https://github.com/EESSI/filesystem-layer/releases/download/v0.3.0/cvmfs-config-eessi-0.3.0.pkg'
-    #    run_local_checkout: 'true'
-    - name: Test EESSI
+    - uses: ./
+    # - name: Test EESSI
+    #  run: |
+    #    direnv status
+    #    module avail
+    #  shell: bash
+    - name: Test available repos
       run: |
-       echo "This is only a placeholder until we figure out how to enable macOS support"
-       echo "if we fix it, make sure to edit the README to include the macOS badge"
-       echo "which is currently commented out"
+        ls /cvmfs/software.eessi.io
+        ls /cvmfs/dev.eessi.io
       shell: bash
