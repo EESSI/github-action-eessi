@@ -25,7 +25,6 @@ runs:
     - id: install-eessi
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
-          echo "EESSI_SILENT=1" >> $GITHUB_ENV
           echo 'unset BASH_ENV' >> $HOME/env_config.export
           echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
           sudo apt install -y direnv
