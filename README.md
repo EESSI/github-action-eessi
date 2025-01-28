@@ -35,9 +35,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        include:
-          - os: ubuntu-24.04-arm
-          - os: ubuntu-24.04
+        os:
+          - ubuntu-24.04-arm
+          - ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
     - uses: eessi/github-action-eessi@v3
