@@ -2,7 +2,7 @@ name: ubuntu-minimal_usage
 on:
   schedule:
     - cron: '0 0 * * *'  # Runs once a day at midnight UTC
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch:  # Allows manual triggering
   push:
     branches:
       - main
