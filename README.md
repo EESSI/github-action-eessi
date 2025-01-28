@@ -21,7 +21,7 @@ jobs:
   ubuntu-minimal:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v3
+    - uses: eessi/github-action-eessi@v4
     - name: Test EESSI
       run: |
         module avail
@@ -38,7 +38,7 @@ jobs:
           - os: ubuntu-24.04-arm
           - os: ubuntu-24.04
     steps:
-    - uses: eessi/github-action-eessi@v3
+    - uses: eessi/github-action-eessi@v4
     - name: Test EESSI
       run: |
         module avail
@@ -51,7 +51,7 @@ jobs:
   macOS-minimal:
     runs-on: macos-latest
     steps:
-    - uses: eessi/github-action-eessi@v2
+    - uses: eessi/github-action-eessi@v4
     - name: Test EESSI
       run: |
         module avail
@@ -75,7 +75,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v3
+    - uses: eessi/github-action-eessi@v4
     - name: Test EESSI
       run: |
         module avail
@@ -93,7 +93,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: eessi/github-action-eessi@v3
+    - uses: eessi/github-action-eessi@v4
     - name: Test EESSI
       run: |
         module load TensorFlow
