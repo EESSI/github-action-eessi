@@ -1,5 +1,5 @@
 # GitHub Action: eessi/github-action-eessi
-[![ubuntu](https://github.com/eessi/github-action-eessi/workflows/ubuntu/badge.svg)](https://github.com/eessi/github-action-eessi/actions?query=workflow%3Aubuntu) <!---[![macOS](https://github.com/eessi/github-action-eessi/workflows/macOS/badge.svg)](https://github.com/eessi/github-action-eessi/actions?query=workflow%3AmacOS)-->
+[![ubuntu](https://github.com/eessi/github-action-eessi/workflows/ubuntu-minimal_usage/badge.svg)](https://github.com/eessi/github-action-eessi/actions?query=workflow%3Aubuntu-minimal_usage) <!---[![macOS](https://github.com/eessi/github-action-eessi/workflows/macOS/badge.svg)](https://github.com/eessi/github-action-eessi/actions?query=workflow%3AmacOS)-->
 
 
 This GitHub Action sets up the [European Environment for Scientific Software Installations](https://eessi.github.io/docs/) (EESSI) for use in GitHub Workflows. EESSI is like a streaming service for software installations: you have access to a large catalogue of software provided by EESSI, however the installations are only cached on your system once you try to access them.
@@ -20,6 +20,23 @@ A minimal job example for GitHub-hosted runners of type `ubuntu-latest`:
 jobs:
   ubuntu-minimal:
     runs-on: ubuntu-latest
+    steps:
+    - uses: eessi/github-action-eessi@v3
+    - name: Test EESSI
+      run: |
+        module avail
+      shell: bash
+```
+and one can also easily create a workflow that will run on both `x86_64` and `Arm` architectures:
+```yaml
+jobs:
+  ubuntu-minimal:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-24.04-arm
+          - os: ubuntu-24.04
     steps:
     - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
