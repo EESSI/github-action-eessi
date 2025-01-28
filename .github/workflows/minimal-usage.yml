@@ -10,9 +10,15 @@ on:
 permissions: read-all
 jobs:
   minimal_usage:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-24.04-arm
+          - os: ubuntu-24.04
+          - os: ubuntu-latest
     steps:
-    - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
     - uses: ./
     - name: Test EESSI
       run: |
