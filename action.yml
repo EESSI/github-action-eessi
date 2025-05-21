@@ -16,7 +16,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: cvmfs-contrib/github-action-cvmfs@204fd621e07d10a8cce4e73b9858b11bf6b95647  # v5.0 + MacOS support
+    - uses: cvmfs-contrib/github-action-cvmfs@d8e39debce81209bbb10bdec77f905b347b032e5  # v5.2 + MacOS support
       with:
         # Can't use config package for macOS but our repos are available with the default configuration anyway
         # cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
@@ -27,6 +27,8 @@ runs:
         if [ "$RUNNER_OS" == "Linux" ]; then
           echo 'unset BASH_ENV' >> $HOME/env_config.export
           echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
+          # allow oversubscription for OpenMPI
+          echo "export OMPI_MCA_rmaps_base_oversubscribe=1" >> $HOME/env_config.export
           sudo apt install -y direnv
           echo 'eval "$(direnv export bash)"' >> $HOME/env_config.export
           mkdir -p $HOME/direnv/
