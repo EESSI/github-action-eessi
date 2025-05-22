@@ -16,7 +16,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: cvmfs-contrib/github-action-cvmfs@c4a951db239043c0d77b7e1a6ae83ce71ef80d97  # v5.2 + cache name update
+    - uses: cvmfs-contrib/github-action-cvmfs@987d52a1a6c90e0a3304453c3f606fa45f376bd0  # v5.2 + cache name update
       with:
         # Can't use config package for macOS but our repos are available with the default configuration anyway
         # cvmfs_config_package: https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb
