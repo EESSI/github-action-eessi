@@ -25,6 +25,7 @@ jobs:
     - uses: ./
       with:
         use_eessi_module: true
+        init_direnv: false
     - name: Test EESSI
       run: |
         module avail
