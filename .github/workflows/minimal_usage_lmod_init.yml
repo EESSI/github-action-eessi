@@ -27,7 +27,6 @@ jobs:
         use_eessi_module: true
     - name: Test EESSI
       run: |
-        direnv status
         module avail
         module list |& grep "EESSI/"
       shell: bash
