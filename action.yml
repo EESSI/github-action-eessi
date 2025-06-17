@@ -12,6 +12,14 @@ inputs:
     description: 'Comma-separated list of fully qualified repository names that shall be mountable under /cvmfs.'
     required: false
     default: 'software.eessi.io,dev.eessi.io'
+  use_eessi_module:
+    description: 'Use the EESSI module to initialise EESSI (rather than sourcing a bash script), valid values are true or false'
+    required: false
+    default: 'false'
+  init_direnv:
+    description: 'Enable direnv initialisation for the repository, valid values are true or false'
+    required: false
+    default: 'true'
 
 runs:
   using: "composite"
@@ -26,17 +34,23 @@ runs:
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
           echo 'unset BASH_ENV' >> $HOME/env_config.export
-          echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
+          if [[ "${{ inputs.use_eessi_module }}" == "true" ]]; then
+            echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/lmod/bash" >> $HOME/env_config.export
+          else
+            echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
+          fi
           # allow oversubscription for OpenMPI
           echo "export OMPI_MCA_rmaps_base_oversubscribe=1" >> $HOME/env_config.export
-          sudo apt install -y direnv
-          echo 'eval "$(direnv export bash)"' >> $HOME/env_config.export
-          mkdir -p $HOME/direnv/
-          echo "[whitelist]" >> $HOME/direnv/direnv.toml
-          echo "prefix = [ '$GITHUB_WORKSPACE' ]" >> $HOME/direnv/direnv.toml
-          cp $HOME/direnv/direnv.toml $HOME/direnv/config.toml
+          if [[ "${{ inputs.init_direnv }}" == "true" ]]; then
+            sudo apt install -y direnv
+            echo 'eval "$(direnv export bash)"' >> $HOME/env_config.export
+            mkdir -p $HOME/direnv/
+            echo "[whitelist]" >> $HOME/direnv/direnv.toml
+            echo "prefix = [ '$GITHUB_WORKSPACE' ]" >> $HOME/direnv/direnv.toml
+            cp $HOME/direnv/direnv.toml $HOME/direnv/config.toml
+            echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
+          fi
           echo "BASH_ENV=$HOME/env_config.export" >> $GITHUB_ENV
-          echo "DIRENV_CONFIG=$HOME/direnv" >> $GITHUB_ENV
         elif [ "$RUNNER_OS" == "macOS" ]; then
           # EESSI on macOS requires lima so we get a Linux VM, see https://gitlab.com/eessi/support/-/issues/70
           # (unfortunately this requires nested virtualisation in GitHub Actions which is not available with M1)
@@ -51,3 +65,4 @@ runs:
       shell: bash
       env:
         EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
+        
