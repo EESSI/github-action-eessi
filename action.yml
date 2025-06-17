@@ -12,6 +12,10 @@ inputs:
     description: 'Comma-separated list of fully qualified repository names that shall be mountable under /cvmfs.'
     required: false
     default: 'software.eessi.io,dev.eessi.io'
+  use_eessi_module:
+    description: 'Use the EESSI module to initialise EESSI (rather than sourcing a bash script), any non-empty value is true'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -26,7 +30,11 @@ runs:
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
           echo 'unset BASH_ENV' >> $HOME/env_config.export
-          echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
+          if [[ -n "${{ inputs.use_eessi_module }}" ]]; then
+            echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/lmod/bash" >> $HOME/env_config.export
+          else
+            echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
+          fi
           # allow oversubscription for OpenMPI
           echo "export OMPI_MCA_rmaps_base_oversubscribe=1" >> $HOME/env_config.export
           sudo apt install -y direnv
@@ -51,3 +59,4 @@ runs:
       shell: bash
       env:
         EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
+        
