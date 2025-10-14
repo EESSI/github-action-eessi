@@ -29,6 +29,7 @@ runs:
         # avoid processing trigger for man-db (seems to slow down installations)
         echo "set man-db/auto-update false" | sudo debconf-communicate
         sudo dpkg-reconfigure man-db
+      shell: bash
     - id: install-cvmfs
       uses: cvmfs-contrib/github-action-cvmfs@f93ba85417fc145df0f82c672618dc7dd94c1702  # v5.2 + cache name update
       with:
