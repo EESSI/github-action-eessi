@@ -26,9 +26,32 @@ runs:
   steps:
     - id: disable-mandb
       run: |
-        # avoid processing trigger for man-db (seems to slow down installations)
-        echo "set man-db/auto-update false" | sudo debconf-communicate
-        sudo dpkg-reconfigure man-db
+        # Detect macOS (Darwin) and exit safely
+        if [ "$(uname)" = "Darwin" ]; then
+          echo "🛑 Skipping man-db disable: not applicable on macOS."
+          exit 0
+        fi
+        # Proceed only if we're on a Debian/Ubuntu-like Linux
+        if [ ! -x /usr/bin/dpkg ]; then
+          echo "⚠️  dpkg not found — this system doesn't use man-db triggers."
+          exit 0
+        fi
+        # Disable man-db updates (safe even if man-db is not installed)
+        # 1. Ensure the directory for custom binaries exists
+        sudo mkdir -p /usr/local/sbin
+        # 2. If mandb exists, back it up once
+        if [ -x /usr/bin/mandb ] && [ ! -f /usr/bin/mandb.disabled ]; then
+          sudo mv /usr/bin/mandb /usr/bin/mandb.disabled
+        fi
+        # 3. Replace mandb with a dummy command that does nothing but succeed
+        if [ ! -e /usr/local/sbin/mandb ]; then
+          echo -e '#!/bin/sh\nexit 0' | sudo tee /usr/local/sbin/mandb >/dev/null
+          sudo chmod +x /usr/local/sbin/mandb
+        fi
+        # 4. (Optional) Remove man-db’s post-install trigger script if it exists
+        if [ -f /var/lib/dpkg/info/man-db.postinst ]; then
+          sudo rm -f /var/lib/dpkg/info/man-db.postinst
+        fi
       shell: bash
     - id: install-cvmfs
       uses: cvmfs-contrib/github-action-cvmfs@f93ba85417fc145df0f82c672618dc7dd94c1702  # v5.2 + cache name update
