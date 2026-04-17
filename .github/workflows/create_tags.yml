@@ -11,10 +11,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: '0'
-      - uses: robinraju/release-downloader@d6de084c58345d09b017e22701dbcf26977cfd14 # v1.6
+      - uses: robinraju/release-downloader@589f66e0b743641255594babae37479abb67e825 # v1.12 + node24 support
         with:
           repository: "fischerscode/tagger"
           fileName: "tagger.linux"

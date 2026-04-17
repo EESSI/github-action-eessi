@@ -21,7 +21,7 @@ jobs:
   ubuntu-minimal:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
@@ -39,7 +39,7 @@ jobs:
           - ubuntu-24.04-arm
           - ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
@@ -53,7 +53,7 @@ jobs:
   macOS-minimal:
     runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
@@ -78,7 +78,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
@@ -97,7 +97,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - uses: eessi/github-action-eessi@v3
     - name: Test EESSI
       run: |
