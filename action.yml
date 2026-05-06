@@ -80,4 +80,3 @@ runs:
           # limactl start eessi || true
           # cat /Users/runner/.lima/eessi/ha.stderr.log
         fi
-      shell: bash
