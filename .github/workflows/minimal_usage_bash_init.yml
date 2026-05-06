@@ -1,4 +1,4 @@
-name: ubuntu-minimal_usage-lmod_init
+name: ubuntu-minimal_usage-bash_script_init
 on:
   schedule:
     - cron: '0 0 * * *'  # Runs once a day at midnight UTC
@@ -24,7 +24,7 @@ jobs:
     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
     - uses: ./
       with:
-        use_eessi_module: true
+        use_eessi_module: false
         init_direnv: false
     - name: Test EESSI
       run: |
