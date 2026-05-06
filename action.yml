@@ -35,10 +35,19 @@ runs:
         cvmfs_http_proxy: DIRECT
         cvmfs_repositories: 'cvmfs-config.cern.ch,${{ inputs.eessi_repositories }}'
     - id: install-eessi
+      shell: bash
+      env:
+        EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
+        ALLOWED_VERSIONS: "2023.06 2025.06"
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
           echo 'unset BASH_ENV' >> $HOME/env_config.export
           if [[ "${{ inputs.mount_cvmfs_only }}" == "false" ]]; then
+            [[ " $ALLOWED_VERSIONS " =~ " $EESSI_STACK_VERSION " ]] || {
+              echo "Invalid eessi_stack_version: '$EESSI_STACK_VERSION'"
+              echo "Allowed values: $ALLOWED_VERSIONS"
+              exit 1
+            }
             if [[ "${{ inputs.use_eessi_module }}" == "true" ]]; then
               # Make the EESSI module sticky so that it persists in case `module purge` is used
               # (while still allowing for a swap if needed)
@@ -72,6 +81,3 @@ runs:
           # cat /Users/runner/.lima/eessi/ha.stderr.log
         fi
       shell: bash
-      env:
-        EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
-        
