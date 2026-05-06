@@ -30,6 +30,8 @@ jobs:
       shell: bash
     - name: Test available repos
       run: |
+        # Make sure an EESSI module is loaded
+        module list |& grep "EESSI/"
         ls /cvmfs/software.eessi.io
         ls /cvmfs/dev.eessi.io
       shell: bash
