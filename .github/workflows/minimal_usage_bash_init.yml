@@ -12,7 +12,7 @@ on:
 # Declare default permissions as read only.
 permissions: read-all
 jobs:
-  minimal_usage:
+  minimal_usage_bash_script:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -29,7 +29,12 @@ jobs:
     - name: Test EESSI
       run: |
         module avail
-        module list |& grep -q "EESSI/"
+        if ! module list |& grep -q "EESSI/"; then
+          echo "EESSI module is NOT loaded"
+        else
+          echo "EESSI module is loaded but shouldn't be"
+          exit 1
+        fi
       shell: bash
     - name: Test available repos
       run: |
