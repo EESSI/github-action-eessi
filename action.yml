@@ -15,7 +15,7 @@ inputs:
   use_eessi_module:
     description: 'Use the EESSI module to initialise EESSI (rather than sourcing a bash script), valid values are true or false'
     required: false
-    default: 'false'
+    default: 'true'
   init_direnv:
     description: 'Enable direnv initialisation for the repository, valid values are true or false'
     required: false
