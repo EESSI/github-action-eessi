@@ -15,6 +15,10 @@ inputs:
   use_eessi_module:
     description: 'Use the EESSI module to initialise EESSI (rather than sourcing a bash script), valid values are true or false'
     required: false
+    default: 'true'
+  mount_cvmfs_only:
+    description: 'Only mount CVMFS, do not initialise EESSI'
+    required: false
     default: 'false'
   init_direnv:
     description: 'Enable direnv initialisation for the repository, valid values are true or false'
@@ -31,13 +35,27 @@ runs:
         cvmfs_http_proxy: DIRECT
         cvmfs_repositories: 'cvmfs-config.cern.ch,${{ inputs.eessi_repositories }}'
     - id: install-eessi
+      shell: bash
+      env:
+        EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
+        ALLOWED_VERSIONS: "2023.06 2025.06"
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
           echo 'unset BASH_ENV' >> $HOME/env_config.export
-          if [[ "${{ inputs.use_eessi_module }}" == "true" ]]; then
-            echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/lmod/bash" >> $HOME/env_config.export
-          else
-            echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
+          if [[ "${{ inputs.mount_cvmfs_only }}" == "false" ]]; then
+            [[ " $ALLOWED_VERSIONS " =~ " $EESSI_STACK_VERSION " ]] || {
+              echo "Invalid eessi_stack_version: '$EESSI_STACK_VERSION'"
+              echo "Allowed values: $ALLOWED_VERSIONS"
+              exit 1
+            }
+            if [[ "${{ inputs.use_eessi_module }}" == "true" ]]; then
+              # Make the EESSI module sticky so that it persists in case `module purge` is used
+              # (while still allowing for a swap if needed)
+              echo "export EESSI_MODULE_STICKY=1" >> $HOME/env_config.export
+              echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/lmod/bash" >> $HOME/env_config.export
+            else
+              echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
+            fi
           fi
           # allow oversubscription for OpenMPI
           echo "export OMPI_MCA_rmaps_base_oversubscribe=1" >> $HOME/env_config.export
@@ -62,7 +80,3 @@ runs:
           # limactl start eessi || true
           # cat /Users/runner/.lima/eessi/ha.stderr.log
         fi
-      shell: bash
-      env:
-        EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
-        

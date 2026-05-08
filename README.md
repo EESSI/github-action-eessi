@@ -41,6 +41,8 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - uses: eessi/github-action-eessi@v3
+      with:
+        eessi_stack_version: '2025.06'
     - name: Test EESSI
       run: |
         module avail
@@ -65,7 +67,10 @@ jobs:
 ## Optional Parameters
 The following parameters are supported:
 - `eessi_stack_version`: version of the EESSI stack to use (defaults to `2023.06`)
-- `eessi_config_package`: location of the EESSI CernVM-FS configuration package (defaults to `https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.deb`). 
+- `eessi_repositories`: Comma separated list of EESSI repositories to make available (defaults to `software.eessi.io,dev.eessi.io`).
+- `use_eessi_module`: Use the Lmod method to initialise EESSI (defaults to `true`)
+- `mount_cvmfs_only`: Only mount the EESSI CernVM-FS repositories, do not initialise EESSI (defaults to `false`)
+- `init_direnv`: Initialise direnv for the repository (defaults to `true`)
 <!--For macOS this parameter is required (e.g., `https://github.com/EESSI/filesystem-layer/releases/download/latest/cvmfs-config-eessi_latest_all.pkg`) -->
 
 ## Minimal Example

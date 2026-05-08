@@ -30,6 +30,26 @@ jobs:
       shell: bash
     - name: Test available repos
       run: |
+        # Make sure an EESSI module is loaded
+        module list |& grep "EESSI/"
         ls /cvmfs/software.eessi.io
         ls /cvmfs/dev.eessi.io
+      shell: bash
+
+  test_mount_only:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: ./
+      with:
+        mount_cvmfs_only: 'true'
+        init_direnv: 'false'
+    - name: Test EESSI not initialised
+      run: |
+        if [[ -v EESSI_VERSION ]]; then
+          echo "EESSI_VERSION should not be set as this indicates EESSI is initialised"
+          exit 1
+        fi
+        # Make sure CVMFS is mounted, and EESSI available
+        ls /cvmfs/software.eessi.io
       shell: bash
