@@ -57,8 +57,10 @@ runs:
               echo "source /cvmfs/software.eessi.io/versions/$EESSI_STACK_VERSION/init/bash" >> $HOME/env_config.export
             fi
           fi
-          # allow oversubscription for OpenMPI
+          # allow oversubscription for OpenMPI for OpenMPI4 
           echo "export OMPI_MCA_rmaps_base_oversubscribe=1" >> $HOME/env_config.export
+          # allow oversubscription for OpenMPI for OpenMPI5 
+          echo "export PRTE_MCA_rmaps_default_mapping_policy=:oversubscribe" >> $HOME/env_config.export
           if [[ "${{ inputs.init_direnv }}" == "true" ]]; then
             sudo apt install -y direnv
             echo 'eval "$(direnv export bash)"' >> $HOME/env_config.export
