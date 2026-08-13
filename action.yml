@@ -38,7 +38,7 @@ runs:
       shell: bash
       env:
         EESSI_STACK_VERSION: ${{ inputs.eessi_stack_version }}
-        ALLOWED_VERSIONS: "2023.06 2025.06"
+        ALLOWED_VERSIONS: "2023.06 2025.06 2026.06"
       run: |
         if [ "$RUNNER_OS" == "Linux" ]; then
           echo 'unset BASH_ENV' >> $HOME/env_config.export
