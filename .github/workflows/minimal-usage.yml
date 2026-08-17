@@ -20,9 +20,15 @@ jobs:
           - ubuntu-24.04-arm
           - ubuntu-24.04
           - ubuntu-latest
+        eessi_version:
+          - 2023.06
+          - 2025.06
+          - 2026.06
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
     - uses: ./
+      with:
+          eessi_stack_version: ${{ matrix.eessi_version }}
     - name: Test EESSI
       run: |
         direnv status
